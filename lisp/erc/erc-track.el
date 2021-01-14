@@ -838,21 +838,14 @@ is in `erc-mode'."
 		;; Add buffer, faces and counts
 		(setq erc-modified-channels-alist
 		      (cons (cons (current-buffer)
-				  (cons 1 (erc-track-select-mode-line-face
-                                           (car faces)
-                                           (cdr faces))))
+				  (cons 1 (erc-track-select-face nil faces)))
 			    erc-modified-channels-alist))
 	      ;; Else modify the face for the buffer, if necessary.
 	      (when faces
 		(let* ((cell (assq (current-buffer)
 				   erc-modified-channels-alist))
 		       (old-face (cddr cell))
-		       (new-face (if old-face
-                                     (erc-track-select-mode-line-face old-face
-                                                                      faces)
-                                   (erc-track-select-mode-line-face
-                                    (car faces)
-                                    (cdr faces)))))
+		       (new-face (erc-track-select-face old-face faces)))
 		  (setcdr cell (cons (1+ (cadr cell)) new-face)))))
 	    ;; And display it
 	    (erc-modified-channels-display)))
